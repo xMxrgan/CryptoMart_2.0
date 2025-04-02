@@ -1,15 +1,24 @@
-/*
-const url = 'https://api.themoviedb.org/3/authentication';
+import { API_KEY } from "./.env";
+const url = "https://api.themoviedb.org/3/search/movie";
 const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjN2E4YzYyMWRkZGM2YjBkMjIyZGI5NGZmMjcxMzBiZiIsIm5iZiI6MTc0Mjc2ODU2NS41LCJzdWIiOiI2N2UwODliNWY2YTBmY2JkMDA0ZGMxMDUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.9f_ejb0fF0ezYNLZZQq954yNvObEQcJ_zrGQg1GJJT4'
-  }
+    method: "GET",
+    headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+    },
 };
 
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error(err));
-*/
+export async function fetchMovies(movie: string) {
+    try {
+        const response = await fetch(`${url}/movie/${movie}`, options);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
